@@ -1,0 +1,85 @@
+package com.example.cinestream.view
+
+import android.os.Bundle
+import android.util.Log
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager2.widget.CompositePageTransformer
+import androidx.viewpager2.widget.MarginPageTransformer
+import com.example.cinestream.R
+import com.example.cinestream.adapter.HomeAdapter
+import com.example.cinestream.data.model.ResponseMovies
+import com.example.cinestream.databinding.FragmentHomeBinding
+import com.example.cinestream.viewmodel.MovieViewModel
+import dagger.hilt.android.AndroidEntryPoint
+import okhttp3.Call
+import okhttp3.Callback
+import okhttp3.Response
+import kotlin.math.abs
+
+@AndroidEntryPoint
+class HomeFragment : Fragment() {
+
+    private var _binding: FragmentHomeBinding? =null
+    private val binding get() = _binding!!
+
+    private val viewModel: MovieViewModel by viewModels()
+
+    private lateinit var adapter: HomeAdapter
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        adapter = HomeAdapter(emptyList())
+
+        viewModel.fetchMovies()
+        viewModel.movies.observe(viewLifecycleOwner){movieList ->
+            val carouselAdapter = HomeAdapter(movieList.take(5))
+            binding.carouselViewPager.adapter = carouselAdapter
+
+            // indicator
+            binding.indicator.setViewPager(binding.carouselViewPager)
+
+            // efek carousel
+            val transformer = CompositePageTransformer().apply {
+                addTransformer(MarginPageTransformer(40))
+                addTransformer { page, position ->
+                    val scale = 1 - abs(position)
+                    page.scaleY = 0.85f + scale * 0.15f
+                }
+            }
+
+            binding.carouselViewPager.setPageTransformer(transformer)
+            // Cegah clipping halaman carousel di kiri-kanan
+            binding.carouselViewPager.clipToPadding = false
+            binding.carouselViewPager.clipChildren = false
+            binding.carouselViewPager.offscreenPageLimit = 3
+
+        // Cegah overscroll
+            (binding.carouselViewPager.getChildAt(0) as RecyclerView).overScrollMode =
+                RecyclerView.OVER_SCROLL_NEVER
+
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+}
