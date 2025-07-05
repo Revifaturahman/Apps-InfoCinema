@@ -1,18 +1,22 @@
-<LinearLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="8dp"
     android:background="@color/dark">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/for_you"
+        android:text="@string/trending"
         android:textSize="30sp"
         android:layout_marginStart="20sp"
-        android:textColor="@color/semi_white"
+        android:textColor="@color/red"
         android:layout_marginBottom="10sp"/>
 
     <androidx.viewpager2.widget.ViewPager2
@@ -32,10 +36,23 @@
         android:layout_gravity="center"
         android:layout_marginTop="8dp" />
 
-    <!-- RecyclerView biasa -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rcMovie"
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="16dp" />
+        android:layout_height="wrap_content"
+        android:text="@string/for_you"
+        android:layout_marginTop="15sp"
+        android:layout_marginBottom="15sp"
+        android:textSize="25sp"
+        android:textColor="@color/semi_white"
+        android:layout_marginStart="20sp"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_popular"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:scrollbars="horizontal"/>
+
+
 </LinearLayout>
+</ScrollView>

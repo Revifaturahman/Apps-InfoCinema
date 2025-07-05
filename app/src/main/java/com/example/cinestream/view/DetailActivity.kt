@@ -1,5 +1,8 @@
 package com.example.cinestream.view
 
+import android.content.ActivityNotFoundException
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.enableEdgeToEdge
@@ -29,7 +32,7 @@ class DetailActivity : AppCompatActivity() {
         val movieId = intent.getIntExtra("MOVIE_ID", -1)
 
         if (movieId != -1) {
-            viewModel.fetchDetail(movieId, apiKey)
+            viewModel.fetchDetail(movieId)
         }
         viewModel.movieDetail.observe(this) { detail ->
 //            Log.d("DETAIL", "title: ${detail?.title}, budget: ${detail?.budget}, id: ${detail?.id} ")
@@ -43,6 +46,22 @@ class DetailActivity : AppCompatActivity() {
 
             val genres = detail?.genres?.joinToString(", ") { it.name ?: "" } ?: ""
             binding.info.text = "${detail?.release_date} | ${detail?.runtime} min | $genres"
+
+            binding.btnPlay.setOnClickListener {
+                val url = "https://vidsrc.net/embed/${detail?.id}" // Ganti dengan URL film/trailer-mu
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                intent.setPackage("com.android.chrome") // Paksa ke Chrome jika ada
+
+                try {
+                    startActivity(intent)
+                } catch (e: ActivityNotFoundException) {
+                    // Kalau Chrome tidak terpasang, buka dengan browser default
+                    intent.setPackage(null)
+                    startActivity(intent)
+                }
+            }
+
 
         }
     }

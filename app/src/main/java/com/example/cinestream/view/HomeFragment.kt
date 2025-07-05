@@ -8,22 +8,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
-import com.example.cinestream.R
 import com.example.cinestream.adapter.HomeAdapter
-import com.example.cinestream.data.model.ResponseMovies
+import com.example.cinestream.adapter.PopularAdapter
 import com.example.cinestream.databinding.FragmentHomeBinding
-import com.example.cinestream.viewmodel.MovieViewModel
+import com.example.cinestream.viewmodel.PopularViewModel
+import com.example.cinestream.viewmodel.TrendingWeekViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import okhttp3.Call
-import okhttp3.Callback
-import okhttp3.Response
 import kotlin.math.abs
 
 @AndroidEntryPoint
@@ -32,9 +26,11 @@ class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? =null
     private val binding get() = _binding!!
 
-    private val viewModel: MovieViewModel by viewModels()
+    private val viewModel: TrendingWeekViewModel by viewModels()
+    private val viewModelPopular: PopularViewModel by viewModels()
 
     private lateinit var adapter: HomeAdapter
+    private lateinit var adapterPopular: PopularAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -47,15 +43,13 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        adapter = HomeAdapter(emptyList()) { movieId ->
-            val intent = Intent(requireContext(), DetailActivity::class.java)
-            intent.putExtra("MOVIE_ID", movieId)
-            startActivity(intent)
-        }
+//        GET
+        viewModel.fetchTrending()
+        viewModelPopular.fetchPopularMovie()
 
-        viewModel.fetchMovies()
+//        VALUE TRENDING
         viewModel.movies.observe(viewLifecycleOwner){movieList ->
-            val adapter = HomeAdapter(movieList) { movieId ->
+            val adapter = HomeAdapter(movieList.take(5)) { movieId ->
                 val intent = Intent(requireContext(), DetailActivity::class.java)
                 intent.putExtra("MOVIE_ID", movieId)
                 startActivity(intent)
@@ -84,6 +78,21 @@ class HomeFragment : Fragment() {
             (binding.carouselViewPager.getChildAt(0) as RecyclerView).overScrollMode =
                 RecyclerView.OVER_SCROLL_NEVER
 
+        }
+
+//        VALUE POPULAR
+        viewModelPopular.popularMovie.observe(viewLifecycleOwner){popularList ->
+//            Log.d("POPULAR", "title: ${popularList.size}")
+
+            val adapter = PopularAdapter(popularList) { movieId ->
+                val intent = Intent(requireContext(), DetailActivity::class.java)
+                intent.putExtra("MOVIE_ID", movieId)
+                startActivity(intent)
+            }
+
+            val layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            binding.rvPopular.layoutManager = layoutManager
+            binding.rvPopular.adapter = adapter
         }
     }
 

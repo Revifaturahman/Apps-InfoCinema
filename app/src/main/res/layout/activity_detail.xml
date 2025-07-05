@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:paddingBottom="50sp"
     android:background="@color/semi_black"
     tools:context=".view.DetailActivity">
 <androidx.constraintlayout.widget.ConstraintLayout
@@ -46,15 +47,17 @@
         android:id="@+id/btnPlay"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
         android:text="@string/play"
         android:textSize="25dp"
-        android:textColor="@color/white"
+        android:textColor="@color/semi_white"
         app:layout_constraintTop_toBottomOf="@id/imgItem"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:backgroundTint="@color/gray"
-        android:alpha="0.6"/>
+        android:backgroundTint="@color/red"
+        />
 
     <LinearLayout
         android:id="@+id/duration"
@@ -71,7 +74,7 @@
             android:layout_height="3dp"
             android:background="@color/gray"
             android:layout_gravity="center"
-            android:layout_marginStart="20dp"
+            android:layout_marginStart="25dp"
             android:layout_marginEnd="10dp"/>
 
         <TextView
@@ -80,7 +83,7 @@
             android:layout_height="wrap_content"
             android:text="2h 27m 38s left"
             android:textColor="@color/semi_white"
-            android:layout_marginEnd="20sp"/>
+            android:layout_marginEnd="25dp"/>
 
     </LinearLayout>
 
@@ -97,7 +100,6 @@
             android:id="@+id/synopsis"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/tes"
             android:textColor="@color/semi_white"
             android:ellipsize="start"/>
 

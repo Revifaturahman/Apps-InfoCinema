@@ -4,26 +4,26 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.cinestream.data.model.ResultDetail
+import com.example.cinestream.data.model.ResultsItem
 import com.example.cinestream.repository.MovieRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class DetailViewModel @Inject constructor(
+class PopularViewModel @Inject constructor(
     private val repository: MovieRepository
-): ViewModel() {
-    private val _movieDetail = MutableLiveData<ResultDetail?>()
-    val movieDetail: LiveData<ResultDetail?> get() = _movieDetail
+) : ViewModel() {
+
+    private val _popularMovie = MutableLiveData<List<ResultsItem>>()
+    val popularMovie: LiveData<List<ResultsItem>> get() = _popularMovie
 
     private val apiKey = "4633a7e48f50d52c40a6198c5ced1bca"
 
-    fun fetchDetail(movieId: Int) {
+    fun fetchPopularMovie() {
         viewModelScope.launch {
-            val detail = repository.getDetail(movieId, apiKey)
-            _movieDetail.value = detail
+            val data = repository.getMoviePopular(apiKey, "id-ID")
+            _popularMovie.value = data
         }
     }
-
 }

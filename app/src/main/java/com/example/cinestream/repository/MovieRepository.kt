@@ -14,37 +14,30 @@ import javax.inject.Inject
 class MovieRepository @Inject constructor(
     private val apiService: ApiService
 ) {
-    fun getMovies(apiKey: String, language: String): LiveData<List<ResultsItem>> {
-        val result = MutableLiveData<List<ResultsItem>>()
-
-        apiService.getMovies(apiKey, language).enqueue(object : Callback<ResponseMovies> {
-            override fun onResponse(call: Call<ResponseMovies>, response: Response<ResponseMovies>) {
-                if (response.isSuccessful) {
-                    result.value = response.body()?.results ?: emptyList()
-                }
-            }
-
-            override fun onFailure(call: Call<ResponseMovies>, t: Throwable) {
-                result.value = emptyList() // atau null
-            }
-        })
-
-        return result
+    suspend fun getTrendingWeek(apiKey: String, language: String): List<ResultsItem> {
+        val response = apiService.getMoviePopular(apiKey, language)
+        return if (response.isSuccessful) {
+            response.body()?.results ?: emptyList()
+        } else {
+            emptyList()
+        }
     }
 
-    fun getDetail(movieId: Int, apiKey: String): LiveData<ResultDetail?>{
-        val detail = MutableLiveData<ResultDetail?>()
+    suspend fun getMoviePopular(apiKey: String, language: String): List<ResultsItem> {
+        val response = apiService.getMoviesTrendingWeek(apiKey, language)
+        return if (response.isSuccessful) {
+            response.body()?.results ?: emptyList()
+        } else {
+            emptyList()
+        }
+    }
 
-        apiService.getDetail(movieId, apiKey).enqueue(object : Callback<ResultDetail> {
-            override fun onResponse(call: Call<ResultDetail>, response: Response<ResultDetail>) {
-                detail.value = response.body()
-            }
-
-            override fun onFailure(call: Call<ResultDetail>, t: Throwable) {
-                detail.value = null
-            }
-        })
-
-        return detail
+    suspend fun getDetail(movieId: Int, apiKey: String): ResultDetail? {
+        val response = apiService.getDetail(movieId, apiKey)
+        return if (response.isSuccessful) {
+            response.body()
+        } else {
+            null
+        }
     }
 }

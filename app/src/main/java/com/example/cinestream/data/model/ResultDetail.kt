@@ -37,5 +37,8 @@ data class ResultDetail(
     val status: String ?= null,
 
     @field: SerializedName("tagline")
-    val tagline: String ?= null
+    val tagline: String ?= null,
+
+    @field: SerializedName("backdrop_path")
+    val backdrop_path: String ?= null
 )
