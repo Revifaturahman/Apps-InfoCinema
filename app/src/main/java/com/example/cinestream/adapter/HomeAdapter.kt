@@ -11,8 +11,10 @@ import com.bumptech.glide.request.RequestOptions
 import com.example.cinestream.R
 import com.example.cinestream.data.model.ResultsItem
 
-class HomeAdapter(private val list: List<ResultsItem>) :
-    RecyclerView.Adapter<HomeAdapter.CarouselViewHolder>() {
+class HomeAdapter(
+    private val list: List<ResultsItem>,
+    private val onItemClick: (Int) -> Unit
+) : RecyclerView.Adapter<HomeAdapter.CarouselViewHolder>() {
 
     inner class CarouselViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val imgPoster = itemView.findViewById<ImageView>(R.id.imgCarouselPoster)
@@ -29,6 +31,10 @@ class HomeAdapter(private val list: List<ResultsItem>) :
         Glide.with(holder.itemView)
             .load("https://image.tmdb.org/t/p/w500${item.poster_path}")
             .into(holder.imgPoster)
+
+        holder.itemView.setOnClickListener {
+            item.id?.let { id -> onItemClick(id) }
+        }
     }
 
     override fun getItemCount(): Int = list.size

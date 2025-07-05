@@ -1,5 +1,6 @@
 package com.example.cinestream.view
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -46,12 +47,20 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        adapter = HomeAdapter(emptyList())
+        adapter = HomeAdapter(emptyList()) { movieId ->
+            val intent = Intent(requireContext(), DetailActivity::class.java)
+            intent.putExtra("MOVIE_ID", movieId)
+            startActivity(intent)
+        }
 
         viewModel.fetchMovies()
         viewModel.movies.observe(viewLifecycleOwner){movieList ->
-            val carouselAdapter = HomeAdapter(movieList.take(5))
-            binding.carouselViewPager.adapter = carouselAdapter
+            val adapter = HomeAdapter(movieList) { movieId ->
+                val intent = Intent(requireContext(), DetailActivity::class.java)
+                intent.putExtra("MOVIE_ID", movieId)
+                startActivity(intent)
+            }
+            binding.carouselViewPager.adapter = adapter
 
             // indicator
             binding.indicator.setViewPager(binding.carouselViewPager)
