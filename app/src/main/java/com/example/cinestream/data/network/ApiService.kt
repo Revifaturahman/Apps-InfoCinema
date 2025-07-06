@@ -23,6 +23,18 @@ interface ApiService {
         @Query("language") language: String
     ): Response<ResponseMovies>   // ⬅️ BUKAN Call<>
 
+    @GET("movie/top_rated")
+    suspend fun getMovieTop(
+        @Query("api_key") apiKey: String,
+        @Query("language") language: String
+    ): Response<ResponseMovies>
+
+    @GET("discover/movie")
+    suspend fun getMovieRelevan(
+        @Query("api_key") apiKey: String,
+        @Query("language") language: String
+    ): Response<ResponseMovies>
+
     @GET("movie/{movie_id}")
     suspend fun getDetail(
         @Path("movie_id") movieId: Int,

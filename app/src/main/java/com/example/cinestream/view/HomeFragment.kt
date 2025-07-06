@@ -10,12 +10,14 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.LayoutManager
 import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
 import com.example.cinestream.adapter.HomeAdapter
 import com.example.cinestream.adapter.PopularAdapter
 import com.example.cinestream.databinding.FragmentHomeBinding
 import com.example.cinestream.viewmodel.PopularViewModel
+import com.example.cinestream.viewmodel.TopRatedViewModel
 import com.example.cinestream.viewmodel.TrendingWeekViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlin.math.abs
@@ -28,9 +30,7 @@ class HomeFragment : Fragment() {
 
     private val viewModel: TrendingWeekViewModel by viewModels()
     private val viewModelPopular: PopularViewModel by viewModels()
-
-    private lateinit var adapter: HomeAdapter
-    private lateinit var adapterPopular: PopularAdapter
+    private val viewModelTop: TopRatedViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,6 +46,7 @@ class HomeFragment : Fragment() {
 //        GET
         viewModel.fetchTrending()
         viewModelPopular.fetchPopularMovie()
+        viewModelTop.fetchTopRated()
 
 //        VALUE TRENDING
         viewModel.movies.observe(viewLifecycleOwner){movieList ->
@@ -94,6 +95,23 @@ class HomeFragment : Fragment() {
             binding.rvPopular.layoutManager = layoutManager
             binding.rvPopular.adapter = adapter
         }
+
+//        VALUE TOP RATED
+        viewModelTop.topRated.observe(viewLifecycleOwner){topList->
+            Log.d("TOP", "jumlah: ${topList.size}")
+
+            val adapter = PopularAdapter(topList){movieId ->
+                val intent = Intent(requireContext(), DetailActivity::class.java)
+                intent.putExtra("MOVIE_ID",movieId )
+                startActivity(intent)
+            }
+
+            val layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            binding.rvTopRated.layoutManager = layoutManager
+            binding.rvTopRated.adapter = adapter
+        }
+
+
     }
 
     override fun onDestroyView() {

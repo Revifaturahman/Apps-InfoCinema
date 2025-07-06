@@ -32,6 +32,24 @@ class MovieRepository @Inject constructor(
         }
     }
 
+    suspend fun getMovieTop(apiKey: String, language: String): List<ResultsItem>{
+        val response = apiService.getMovieTop(apiKey, language)
+        return if (response.isSuccessful){
+            response.body()?.results ?: emptyList()
+        }else {
+            emptyList()
+        }
+    }
+
+    suspend fun getMovieRelevan(apiKey: String, language: String): List<ResultsItem>{
+        val response = apiService.getMovieRelevan(apiKey, language)
+        return if (response.isSuccessful){
+            response.body()?.results ?: emptyList()
+        }else{
+            emptyList()
+        }
+    }
+
     suspend fun getDetail(movieId: Int, apiKey: String): ResultDetail? {
         val response = apiService.getDetail(movieId, apiKey)
         return if (response.isSuccessful) {
