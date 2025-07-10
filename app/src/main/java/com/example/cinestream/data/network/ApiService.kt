@@ -21,7 +21,7 @@ interface ApiService {
     suspend fun getMoviePopular(
         @Query("api_key") apiKey: String,
         @Query("language") language: String
-    ): Response<ResponseMovies>   // ⬅️ BUKAN Call<>
+    ): Response<ResponseMovies>
 
     @GET("movie/top_rated")
     suspend fun getMovieTop(
@@ -35,10 +35,17 @@ interface ApiService {
         @Query("language") language: String
     ): Response<ResponseMovies>
 
+    @GET("search/movie")
+    suspend fun searchMovie(
+        @Query("api_key") apiKey: String,
+        @Query("language") language: String,
+        @Query("query") query: String
+    ): Response<ResponseMovies>
+
     @GET("movie/{movie_id}")
     suspend fun getDetail(
         @Path("movie_id") movieId: Int,
         @Query("api_key") apiKey: String
-    ): Response<ResultDetail>     // ⬅️ BUKAN Call<>
+    ): Response<ResultDetail>
 
 }

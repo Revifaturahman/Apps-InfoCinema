@@ -10,7 +10,7 @@ import com.example.cinestream.R
 import com.example.cinestream.data.model.ResultsItem
 
 class SearchAdapter(
-    private val list: List<ResultsItem>,
+    private val list: MutableList<ResultsItem>,
     private val onItemClick: (Int) -> Unit
 ): RecyclerView.Adapter<SearchAdapter.MovieViewHolder>() {
 
@@ -36,5 +36,12 @@ class SearchAdapter(
     }
 
     override fun getItemCount(): Int = list.size
+
+    fun updateList(newList: List<ResultsItem>) {
+        list.clear()
+        list.addAll(newList)
+        notifyDataSetChanged()
+    }
+
 
 }

@@ -50,6 +50,16 @@ class MovieRepository @Inject constructor(
         }
     }
 
+    suspend fun searchMovie(apiKey: String, language: String, query: String): List<ResultsItem>{
+        val response = apiService.searchMovie(apiKey, language, query = query)
+        return  if (response.isSuccessful){
+            response.body()?.results ?: emptyList()
+        }else{
+            emptyList()
+        }
+
+    }
+
     suspend fun getDetail(movieId: Int, apiKey: String): ResultDetail? {
         val response = apiService.getDetail(movieId, apiKey)
         return if (response.isSuccessful) {
