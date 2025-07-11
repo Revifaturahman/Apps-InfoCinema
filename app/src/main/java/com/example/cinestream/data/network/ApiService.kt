@@ -1,6 +1,7 @@
 package com.example.cinestream.data.network
 
 import com.example.cinestream.data.model.ResponseMovies
+import com.example.cinestream.data.model.ResultCredits
 import com.example.cinestream.data.model.ResultDetail
 import retrofit2.Call
 import retrofit2.Response
@@ -47,5 +48,11 @@ interface ApiService {
         @Path("movie_id") movieId: Int,
         @Query("api_key") apiKey: String
     ): Response<ResultDetail>
+
+    @GET("movie/{movie_id}/credits")
+    suspend fun getCast(
+        @Path("movie_id") movieId: Int,
+        @Query("api_key") apiKey: String
+    ): Response<ResultCredits>
 
 }

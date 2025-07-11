@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.cinestream.data.model.ResultCast
 import com.example.cinestream.data.model.ResultDetail
 import com.example.cinestream.repository.MovieRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,12 +18,22 @@ class DetailViewModel @Inject constructor(
     private val _movieDetail = MutableLiveData<ResultDetail?>()
     val movieDetail: LiveData<ResultDetail?> get() = _movieDetail
 
+    private val _movieCast = MutableLiveData<List<ResultCast>>()
+    val movieCast: LiveData<List<ResultCast>> get() = _movieCast
+
     private val apiKey = "4633a7e48f50d52c40a6198c5ced1bca"
 
     fun fetchDetail(movieId: Int) {
         viewModelScope.launch {
             val detail = repository.getDetail(movieId, apiKey)
             _movieDetail.value = detail
+        }
+    }
+
+    fun fetchCast(movieId: Int){
+        viewModelScope.launch {
+            val cast = repository.getCast(movieId, apiKey)
+            _movieCast.value = cast
         }
     }
 

@@ -1,14 +1,9 @@
 package com.example.cinestream.repository
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import com.example.cinestream.data.model.ResponseMovies
+import com.example.cinestream.data.model.ResultCast
 import com.example.cinestream.data.model.ResultDetail
 import com.example.cinestream.data.model.ResultsItem
 import com.example.cinestream.data.network.ApiService
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import javax.inject.Inject
 
 class MovieRepository @Inject constructor(
@@ -66,6 +61,15 @@ class MovieRepository @Inject constructor(
             response.body()
         } else {
             null
+        }
+    }
+
+    suspend fun getCast(movieId: Int, apiKey: String): List<ResultCast> {
+        val response = apiService.getCast(movieId, apiKey)
+        return if (response.isSuccessful) {
+            response.body()?.cast ?: emptyList()
+        } else {
+            emptyList()
         }
     }
 }

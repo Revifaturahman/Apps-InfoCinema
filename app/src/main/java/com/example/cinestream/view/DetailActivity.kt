@@ -10,8 +10,12 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView.LayoutManager
 import com.bumptech.glide.Glide
 import com.example.cinestream.R
+import com.example.cinestream.adapter.CastAdapter
+import com.example.cinestream.adapter.PopularAdapter
 import com.example.cinestream.databinding.ActivityDetailBinding
 import com.example.cinestream.viewmodel.DetailViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -22,7 +26,8 @@ class DetailActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityDetailBinding
     private val viewModel: DetailViewModel by viewModels()
-    private val apiKey = "4633a7e48f50d52c40a6198c5ced1bca"
+
+    private lateinit var adapter: CastAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,6 +38,7 @@ class DetailActivity : AppCompatActivity() {
 
         if (movieId != -1) {
             viewModel.fetchDetail(movieId)
+            viewModel.fetchCast(movieId)
         }
         viewModel.movieDetail.observe(this) { detail ->
 //            Log.d("DETAIL", "title: ${detail?.title}, budget: ${detail?.budget}, id: ${detail?.id} ")
@@ -61,8 +67,18 @@ class DetailActivity : AppCompatActivity() {
                     startActivity(intent)
                 }
             }
+        }
 
+        viewModel.movieCast.observe(this){castList ->
+            adapter = CastAdapter(castList){castID ->
+            val intent = Intent(this, CastActivity::class.java)
+            intent.putExtra("CAST_ID", castID)
+            startActivity(intent)
+            }
 
+            val layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+            binding.rvActress.layoutManager = layoutManager
+            binding.rvActress.adapter = adapter
         }
     }
 }
