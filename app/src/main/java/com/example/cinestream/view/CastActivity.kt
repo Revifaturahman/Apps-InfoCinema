@@ -1,5 +1,6 @@
 package com.example.cinestream.view
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.enableEdgeToEdge
@@ -7,8 +8,12 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView.LayoutManager
 import com.bumptech.glide.Glide
 import com.example.cinestream.R
+import com.example.cinestream.adapter.CastAdapter
+import com.example.cinestream.adapter.PopularAdapter
 import com.example.cinestream.databinding.ActivityCastBinding
 import com.example.cinestream.viewmodel.DetailCastViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -20,6 +25,8 @@ class CastActivity : AppCompatActivity() {
 
     private val viewModel: DetailCastViewModel by viewModels()
 
+    private lateinit var adapter: PopularAdapter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCastBinding.inflate(layoutInflater)
@@ -29,6 +36,7 @@ class CastActivity : AppCompatActivity() {
 
         if (personId != -1){
             viewModel.fetchDetailCast(personId)
+            viewModel.fetchCastMovie(personId)
         }
 
         viewModel.detailCast.observe(this){detail->
@@ -43,6 +51,20 @@ class CastActivity : AppCompatActivity() {
             binding.tvPlaceOfBirth.text = detail?.place_of_birth
             binding.tvBiography.text = detail?.biography
 
+        }
+
+        viewModel.detailCastMovie.observe(this){castMovie ->
+//            Log.d("CAST_MOVIE", "jumlah: ${castMovie.size}")
+
+            adapter = PopularAdapter(castMovie){movieId->
+                val intent = Intent(this, DetailActivity::class.java)
+                intent.putExtra("MOVIE_ID", movieId)
+                startActivity(intent)
+            }
+
+            val layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+            binding.rvCastMovie.layoutManager = layoutManager
+            binding.rvCastMovie.adapter = adapter
         }
 
     }

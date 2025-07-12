@@ -98,7 +98,7 @@ class HomeFragment : Fragment() {
 
 //        VALUE TOP RATED
         viewModelTop.topRated.observe(viewLifecycleOwner){topList->
-            Log.d("TOP", "jumlah: ${topList.size}")
+//            Log.d("TOP", "jumlah: ${topList.size}")
 
             val adapter = PopularAdapter(topList){movieId ->
                 val intent = Intent(requireContext(), DetailActivity::class.java)

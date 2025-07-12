@@ -1,5 +1,6 @@
 package com.example.cinestream.repository
 
+import com.example.cinestream.data.model.ResponseCastMovies
 import com.example.cinestream.data.model.ResultCast
 import com.example.cinestream.data.model.ResultDetail
 import com.example.cinestream.data.model.ResultDetailCast
@@ -80,6 +81,16 @@ class MovieRepository @Inject constructor(
             response.body()
         }else{
             null
+        }
+    }
+
+    suspend fun getCastMovie(personId: Int, apiKey: String): List<ResultsItem>{
+
+        val response = apiService.getCastMovie(personId, apiKey)
+        return if (response.isSuccessful){
+            response.body()?.cast ?: emptyList()
+        }else {
+            emptyList()
         }
     }
 }
