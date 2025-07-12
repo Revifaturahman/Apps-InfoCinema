@@ -70,9 +70,9 @@ class DetailActivity : AppCompatActivity() {
         }
 
         viewModel.movieCast.observe(this){castList ->
-            adapter = CastAdapter(castList){castID ->
+            adapter = CastAdapter(castList){personId ->
             val intent = Intent(this, CastActivity::class.java)
-            intent.putExtra("CAST_ID", castID)
+            intent.putExtra("CAST_ID", personId)
             startActivity(intent)
             }
 

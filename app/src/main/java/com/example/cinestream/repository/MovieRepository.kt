@@ -2,6 +2,7 @@ package com.example.cinestream.repository
 
 import com.example.cinestream.data.model.ResultCast
 import com.example.cinestream.data.model.ResultDetail
+import com.example.cinestream.data.model.ResultDetailCast
 import com.example.cinestream.data.model.ResultsItem
 import com.example.cinestream.data.network.ApiService
 import javax.inject.Inject
@@ -70,6 +71,15 @@ class MovieRepository @Inject constructor(
             response.body()?.cast ?: emptyList()
         } else {
             emptyList()
+        }
+    }
+
+    suspend fun getDetailCast(personId: Int, apiKey: String): ResultDetailCast?{
+        val response = apiService.getDetailCast(personId, apiKey)
+        return if (response.isSuccessful){
+            response.body()
+        }else{
+            null
         }
     }
 }

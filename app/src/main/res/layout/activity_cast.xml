@@ -1,10 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="16dp"
+    android:background="#FFFFFF"
+    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools"
     tools:context=".view.CastActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Foto Aktor -->
+        <ImageView
+            android:id="@+id/imgCast"
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
+            android:scaleType="centerCrop" />
+
+        <!-- Nama Aktor -->
+        <TextView
+            android:id="@+id/tvName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Nama Aktor"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:layout_marginTop="16dp"
+            android:textColor="#000000" />
+
+        <!-- Tanggal Lahir -->
+        <TextView
+            android:id="@+id/tvBirthday"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Tanggal Lahir: 01 Januari 1980"
+            android:layout_marginTop="8dp"
+            android:textColor="#444444" />
+
+        <!-- Tempat Lahir -->
+        <TextView
+            android:id="@+id/tvPlaceOfBirth"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Tempat Lahir: Los Angeles, USA"
+            android:layout_marginTop="4dp"
+            android:textColor="#444444" />
+
+        <!-- Biografi -->
+        <TextView
+            android:id="@+id/tvBiography"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Biografi akan ditampilkan di sini..."
+            android:layout_marginTop="12dp"
+            android:textColor="#333333"
+            android:lineSpacingExtra="4dp" />
+    </LinearLayout>
+</ScrollView>
