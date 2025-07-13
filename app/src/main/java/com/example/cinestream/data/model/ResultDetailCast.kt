@@ -25,5 +25,9 @@ data class ResultDetailCast(
     val place_of_birth: String ?= null,
 
     @field: SerializedName("profile_path")
-    val profile_path: String ?= null
+    val profile_path: String ?= null,
+
+    @field:SerializedName("known_for_department")
+    val known_for_department: String? = null,
+
 )

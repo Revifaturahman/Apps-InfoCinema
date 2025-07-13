@@ -1,78 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/main"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
     android:background="#FFFFFF"
-    android:orientation="vertical"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".view.CastActivity">
+    android:padding="16dp">
+    
+    <TextView
+        android:id="@+id/tvName"
+        android:text="Nama"
+        android:textSize="30sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/tvDepartment"
+        android:textSize="20sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_marginTop="10dp"
+        app:tabIndicatorColor="@android:color/black"
+        app:tabSelectedTextColor="@android:color/black"
+        app:tabTextColor="@android:color/darker_gray" />
 
-        <!-- Foto Aktor -->
-        <ImageView
-            android:id="@+id/imgCast"
-            android:layout_width="match_parent"
-            android:layout_height="400dp"
-            android:scaleType="centerCrop" />
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
 
-        <!-- Nama Aktor -->
-        <TextView
-            android:id="@+id/tvName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Nama Aktor"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:layout_marginTop="16dp"
-            android:textColor="#000000" />
-
-        <!-- Tanggal Lahir -->
-        <TextView
-            android:id="@+id/tvBirthday"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Tanggal Lahir: 01 Januari 1980"
-            android:layout_marginTop="8dp"
-            android:textColor="#444444" />
-
-        <!-- Tempat Lahir -->
-        <TextView
-            android:id="@+id/tvPlaceOfBirth"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Tempat Lahir: Los Angeles, USA"
-            android:layout_marginTop="4dp"
-            android:textColor="#444444" />
-
-        <!-- Biografi -->
-        <TextView
-            android:id="@+id/tvBiography"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Biografi akan ditampilkan di sini..."
-            android:layout_marginTop="12dp"
-            android:textColor="#333333"
-            android:lineSpacingExtra="4dp" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/movies"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:layout_marginTop="20sp"
-            android:textColor="#000000" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_castMovie"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"/>
-    </LinearLayout>
-</ScrollView>
+</LinearLayout>

@@ -13,9 +13,11 @@ import androidx.recyclerview.widget.RecyclerView.LayoutManager
 import com.bumptech.glide.Glide
 import com.example.cinestream.R
 import com.example.cinestream.adapter.CastAdapter
+import com.example.cinestream.adapter.CastPagerAdapter
 import com.example.cinestream.adapter.PopularAdapter
 import com.example.cinestream.databinding.ActivityCastBinding
 import com.example.cinestream.viewmodel.DetailCastViewModel
+import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -36,36 +38,32 @@ class CastActivity : AppCompatActivity() {
 
         if (personId != -1){
             viewModel.fetchDetailCast(personId)
-            viewModel.fetchCastMovie(personId)
         }
 
-        viewModel.detailCast.observe(this){detail->
-//            Log.d("NAME", "nama: ${detail?.name} id: ${detail?.id}")
-
-            Glide.with(this)
-                .load("https://image.tmdb.org/t/p/w500${detail?.profile_path}")
-                .into(binding.imgCast)
-
-            binding.tvName.text = detail?.name
-            binding.tvBirthday.text = detail?.birthday
-            binding.tvPlaceOfBirth.text = detail?.place_of_birth
-            binding.tvBiography.text = detail?.biography
-
+        viewModel.detailCast.observe(this){detailCast ->
+            binding.tvName.text = detailCast?.name
+            binding.tvDepartment.text =detailCast?.known_for_department
         }
 
-        viewModel.detailCastMovie.observe(this){castMovie ->
-//            Log.d("CAST_MOVIE", "jumlah: ${castMovie.size}")
+        val bundle = Bundle()
+        bundle.putInt("PERSON_ID", personId)
 
-            adapter = PopularAdapter(castMovie){movieId->
-                val intent = Intent(this, DetailActivity::class.java)
-                intent.putExtra("MOVIE_ID", movieId)
-                startActivity(intent)
+        val fragments = listOf(
+            CastInfoFragment().apply { arguments = bundle },
+            CastMovieFragment().apply { arguments = bundle }
+        )
+
+        val adapter = CastPagerAdapter(this, fragments)
+        binding.viewPager.adapter = adapter
+
+        TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
+            tab.text = when (position) {
+                0 -> "Informasi Umum"
+                else -> "Film & Acara TV"
             }
+        }.attach()
 
-            val layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-            binding.rvCastMovie.layoutManager = layoutManager
-            binding.rvCastMovie.adapter = adapter
-        }
+
 
     }
 }
