@@ -40,5 +40,11 @@ data class ResultDetail(
     val tagline: String ?= null,
 
     @field: SerializedName("backdrop_path")
-    val backdrop_path: String ?= null
+    val backdrop_path: String ?= null,
+
+    @field: SerializedName("vote_average")
+    val vote_average: String ?= null,
+
+    @field: SerializedName("vote_count")
+    val vote_count: String ?= null
 )

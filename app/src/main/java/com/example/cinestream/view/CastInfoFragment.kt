@@ -57,12 +57,13 @@ class CastInfoFragment : Fragment() {
             also_known_as = detail?.also_known_as
             birth = detail?.birthday.toString()
             biografy = detail?.biography.toString()
+            val alsoKnownAs = detail?.also_known_as?.joinToString(", ") ?: ""
 
             binding.tvAge.text = "${hitungUmur(detail?.birthday ?: "")} Year"
             binding.tvBirthday.text = "Birthday: ${birthday}"
             binding.tvPlaceOfBirth.text = "Place of Birth: ${place_of_birth}"
             binding.tvGender.text = "Gender: ${gender}"
-            binding.tvKnownAs.text = "Known As: ${also_known_as}"
+            binding.tvKnownAs.text = "Known As: ${alsoKnownAs}"
             binding.tvBiografy.text = biografy
             binding.tvBirth.text = birth
         }

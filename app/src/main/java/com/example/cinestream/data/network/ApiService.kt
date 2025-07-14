@@ -2,6 +2,7 @@ package com.example.cinestream.data.network
 
 import com.example.cinestream.data.model.ResponseCastMovies
 import com.example.cinestream.data.model.ResponseMovies
+import com.example.cinestream.data.model.ResponseTrailer
 import com.example.cinestream.data.model.ResultCredits
 import com.example.cinestream.data.model.ResultDetail
 import com.example.cinestream.data.model.ResultDetailCast
@@ -56,6 +57,12 @@ interface ApiService {
         @Path("movie_id") movieId: Int,
         @Query("api_key") apiKey: String
     ): Response<ResultCredits>
+
+    @GET("movie/{movie_id}/videos")
+    suspend fun getTrailer(
+        @Path("movie_id") movieId: Int,
+        @Query("api_key") apiKey: String
+    ): Response<ResponseTrailer>
 
     @GET("person/{person_id}")
     suspend fun getDetailCast(

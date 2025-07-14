@@ -29,7 +29,7 @@ class HomeAdapter(
     override fun onBindViewHolder(holder: CarouselViewHolder, position: Int) {
         val item = list[position]
         Glide.with(holder.itemView)
-            .load("https://image.tmdb.org/t/p/w500${item.poster_path}")
+            .load("https://image.tmdb.org/t/p/w500${item.backdrop_path}")
             .into(holder.imgPoster)
 
         holder.itemView.setOnClickListener {

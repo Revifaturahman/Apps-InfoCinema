@@ -19,6 +19,7 @@ import com.example.cinestream.adapter.PopularAdapter
 import com.example.cinestream.databinding.ActivityDetailBinding
 import com.example.cinestream.viewmodel.DetailViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import java.text.NumberFormat
 import java.util.zip.Inflater
 
 @AndroidEntryPoint
@@ -39,34 +40,31 @@ class DetailActivity : AppCompatActivity() {
         if (movieId != -1) {
             viewModel.fetchDetail(movieId)
             viewModel.fetchCast(movieId)
+            viewModel.fetchTrailer(movieId)
         }
         viewModel.movieDetail.observe(this) { detail ->
 //            Log.d("DETAIL", "title: ${detail?.title}, budget: ${detail?.budget}, id: ${detail?.id} ")
             Glide.with(this)
-                .load("https://image.tmdb.org/t/p/w500${detail?.poster_path}")
+                .load("https://image.tmdb.org/t/p/w500${detail?.backdrop_path}")
                 .into(binding.imgItem)
 
             binding.title.text = detail?.title
-            binding.durasi.text = "${detail?.runtime} min"
             binding.synopsis.text = detail?.overview
 
             val genres = detail?.genres?.joinToString(", ") { it.name ?: "" } ?: ""
-            binding.info.text = "${detail?.release_date} | ${detail?.runtime} min | $genres"
 
-            binding.btnPlay.setOnClickListener {
-                val url = "https://vidsrc.net/embed/${detail?.id}" // Ganti dengan URL film/trailer-mu
-                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                intent.setPackage("com.android.chrome") // Paksa ke Chrome jika ada
+            val formatter = NumberFormat.getInstance()
 
-                try {
-                    startActivity(intent)
-                } catch (e: ActivityNotFoundException) {
-                    // Kalau Chrome tidak terpasang, buka dengan browser default
-                    intent.setPackage(null)
-                    startActivity(intent)
-                }
-            }
+            binding.budget.text = ": ${detail?.budget?.let { "$" + formatter.format(it) }}" ?: "-"
+            binding.popularity.text = ": ${detail?.popularity?.toString()}" ?: "-"
+            binding.release.text = ": ${detail?.release_date}" ?: "-"
+            binding.revenue.text = ": ${detail?.revenue?.let { "$" + formatter.format(it) }}" ?: "-"
+            binding.runtime.text = ": ${detail?.runtime?.let { "$it minutes" }}" ?: "-"
+            binding.status.text = ": ${detail?.status}" ?: "-"
+            binding.tagline.text = ": ${detail?.tagline}" ?: "-"
+            binding.voteAverage.text = ": ${detail?.vote_average?.toString()}" ?: "-"
+            binding.voteCount.text = ": ${detail?.vote_count?.toString()}" ?: "-"
+            binding.genres.text = ": ${genres}"
         }
 
         viewModel.movieCast.observe(this){castList ->
@@ -80,5 +78,20 @@ class DetailActivity : AppCompatActivity() {
             binding.rvActress.layoutManager = layoutManager
             binding.rvActress.adapter = adapter
         }
+
+        viewModel.movieTrailer.observe(this) { trailerList ->
+            val firstTrailer = trailerList.firstOrNull()
+            firstTrailer?.let {
+                val trailerHtml = """
+            <iframe width="100%" height="100%" 
+                    src="https://www.youtube.com/embed/${it.key}" 
+                    frameborder="0" allowfullscreen></iframe>
+        """.trimIndent()
+
+                binding.webViewTrailer.settings.javaScriptEnabled = true
+                binding.webViewTrailer.loadData(trailerHtml, "text/html", "utf-8")
+            }
+        }
+
     }
 }

@@ -1,9 +1,11 @@
 package com.example.cinestream.repository
 
 import com.example.cinestream.data.model.ResponseCastMovies
+import com.example.cinestream.data.model.ResponseTrailer
 import com.example.cinestream.data.model.ResultCast
 import com.example.cinestream.data.model.ResultDetail
 import com.example.cinestream.data.model.ResultDetailCast
+import com.example.cinestream.data.model.ResultTrailer
 import com.example.cinestream.data.model.ResultsItem
 import com.example.cinestream.data.network.ApiService
 import javax.inject.Inject
@@ -63,6 +65,15 @@ class MovieRepository @Inject constructor(
             response.body()
         } else {
             null
+        }
+    }
+
+    suspend fun getTrailer(movieId: Int, apiKey: String): List<ResultTrailer>{
+        val response = apiService.getTrailer(movieId, apiKey)
+        return if (response.isSuccessful){
+            response.body()?.results ?: emptyList()
+        } else {
+            emptyList()
         }
     }
 
