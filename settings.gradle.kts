@@ -19,6 +19,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "CineStream"
+rootProject.name = "InfoCinema"
 include(":app")
  

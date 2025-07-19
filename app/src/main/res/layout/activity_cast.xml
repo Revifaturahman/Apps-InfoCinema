@@ -5,7 +5,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/gray"
+    android:background="@color/white"
     android:paddingBottom="20sp"
     android:padding="10dp">
     
@@ -27,6 +27,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:background="@color/white"
         app:tabIndicatorColor="@android:color/black"
         app:tabSelectedTextColor="@android:color/black"
         app:tabTextColor="@android:color/darker_gray" />

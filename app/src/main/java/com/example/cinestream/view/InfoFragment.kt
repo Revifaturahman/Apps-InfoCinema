@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import com.example.cinestream.R
 import com.example.cinestream.databinding.FragmentInfoBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -23,6 +24,16 @@ class InfoFragment : Fragment() {
         // Inflate the layout for this fragment
         _binding = FragmentInfoBinding.inflate(inflater, container, false)
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding.infoText.post {
+            val animation = AnimationUtils.loadAnimation(requireContext(), R.anim.fade_in)
+            binding.infoText.startAnimation(animation)
+        }
+
     }
 
     override fun onDestroyView() {

@@ -19,7 +19,7 @@ interface ApiService {
     suspend fun getMoviesTrendingWeek(
         @Query("api_key") apiKey: String,
         @Query("language") language: String
-    ): Response<ResponseMovies>   // ⬅️ BUKAN Call<>
+    ): Response<ResponseMovies>
 
     @GET("movie/popular")
     suspend fun getMoviePopular(
