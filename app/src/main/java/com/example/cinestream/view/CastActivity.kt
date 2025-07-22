@@ -1,6 +1,7 @@
 package com.example.cinestream.view
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.enableEdgeToEdge
@@ -41,6 +42,19 @@ class CastActivity : AppCompatActivity() {
         }
 
         viewModel.detailCast.observe(this){detailCast ->
+            val layoutGender = binding.layoutGender
+//            val container = binding.viewPager
+            if (detailCast?.gender == 1) {
+                // Female → Pink
+                layoutGender.setBackgroundColor(Color.parseColor("#FCE4EC"))
+//                container.setBackgroundColor(Color.parseColor("#FCE4EC"))
+            } else {
+                // Male → Blue
+                layoutGender.setBackgroundColor(Color.parseColor("#E3F2FD"))
+//                container.setBackgroundColor(Color.parseColor("#E3F2FD"))
+            }
+
+            Log.d("DetailCastDebug", "Isi detailCast: $detailCast")
             binding.tvName.text = detailCast?.name
             binding.tvDepartment.text =detailCast?.known_for_department
         }
@@ -58,8 +72,8 @@ class CastActivity : AppCompatActivity() {
 
         TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
             tab.text = when (position) {
-                0 -> "Informasi Umum"
-                else -> "Film & Acara TV"
+                0 -> "General Information"
+                else -> "Movies"
             }
         }.attach()
 

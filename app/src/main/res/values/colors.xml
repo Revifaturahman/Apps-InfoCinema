@@ -6,7 +6,19 @@
     <color name="dark">#090040</color>
     <color name="semi_white">#FDFAF6</color>
     <color name="semi_black">#2B2B2B</color>
-    <color name="red">#FF0000</color>
+    <color name="bluesky">#00B0FF</color>
+    <color name="bluetransparant">#E3F2FD</color>
+    <color name="pink">#FCE4EC</color>
     <color name="gray">#DDDDDD</color>
-    <color name="blue">#EEF2FF</color>
+    <color name="gray_young">#BBBBBB</color>
+<!--    <color name="blue">#007BFF</color>-->
+<!--    <color name="blue1">#1E90FF</color>-->
+<!--    <color name="blue2">#87CEEB</color>-->
+<!--    <color name="blue3">#4169E1</color>-->
+<!--    <color name="blue">#1E90FF</color>-->
+    <color name="blue">#0d253f</color>
+    <color name="blue1">#0A0A2A</color>
+    <color name="blue2">#1C1C3A</color>
+    <color name="blacktransparant">#CC000000</color>
+<!--    <color name="blue5">#4682B4</color>-->
 </resources>

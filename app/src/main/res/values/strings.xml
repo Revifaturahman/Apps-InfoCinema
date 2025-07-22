@@ -9,12 +9,14 @@
     <string name="movies">Movies</string>
     <string name="cast">Actors and Actress</string>
     <string name="desc_info">
-InfoCinema menyajikan informasi film terkini, trending, dan akan datang.
+InfoCinema delivers up-to-date information on current, trending.
 
-Dibangun dengan Kotlin, MVVM, dan Clean Architecture.
+Built with Kotlin, MVVM, and Clean Architecture.
 
 Disclaimer:
-Produk ini menggunakan TMDb API namun tidak disponsori atau disertifikasi oleh TMDb.
+This product uses the TMDb API but is not endorsed or certified by TMDb.
 
-© 2025 CineStream</string>
+© 2025 InfoCinema
+
+</string>
 </resources>

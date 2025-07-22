@@ -1,5 +1,6 @@
 package com.example.cinestream.view
 
+import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -49,9 +50,13 @@ class CastInfoFragment : Fragment() {
 
             birthday = detail?.birthday.toString()
             place_of_birth = detail?.place_of_birth.toString()
+
+            val layoutGender = binding.layout
             if (detail?.gender != 1){
                 gender = "Male"
+                layoutGender.setBackgroundColor(Color.parseColor("#E3F2FD"))
             }else{
+                layoutGender.setBackgroundColor(Color.parseColor("#FCE4EC"))
                 gender = "Female"
             }
             also_known_as = detail?.also_known_as
