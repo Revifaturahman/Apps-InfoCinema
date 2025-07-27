@@ -37,9 +37,9 @@
         <!-- TMDb Icon -->
         <ImageView
             android:id="@+id/tmdb_logo"
-            android:layout_width="120dp"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_home"
+            android:src="@drawable/img_logo"
             android:contentDescription="TMDb logo"
             android:adjustViewBounds="true"
             android:paddingBottom="16dp" />
