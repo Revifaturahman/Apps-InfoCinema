@@ -7,11 +7,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.cinestream"
+    namespace = "com.revifaturahman.infocinema"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.example.cinestream"
+        applicationId = "com.revifaturahman.infocinema"
         minSdk = 24
         targetSdk = 35
         versionCode = 1

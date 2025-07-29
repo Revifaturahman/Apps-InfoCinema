@@ -9,14 +9,15 @@
     <string name="movies">Movies</string>
     <string name="cast">Actors and Actress</string>
     <string name="desc_info">
-InfoCinema delivers up-to-date information on current, trending.
-
-Built with Kotlin, MVVM, and Clean Architecture.
+Browse movie details, ratings, and summaries, all in one place making it easier than ever to stay updated and entertained.
+Whether you are a casual viewer or a movie enthusiast, InfoCinema helps you find something worth watching.
+InfoCinema is your go-to app for discovering the latest movies, popular titles, and current trends in the world of cinema.
 
 Disclaimer:
-This product uses the TMDb API but is not endorsed or certified by TMDb.
+This app uses the TMDb API but is not endorsed or certified by TMDb.
 
-© 2025 InfoCinema
+
 
 </string>
+    <string name="tagline">© 2025 InfoCinema</string>
 </resources>
