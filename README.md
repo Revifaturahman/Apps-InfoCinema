@@ -104,4 +104,21 @@ Proyek ini dilisensikan di bawah [MIT License](LICENSE).
 
 - **Revi Faturahman** – [GitHub](https://github.com/Revifaturahman)
 
-<!-- Tambahkan kontributor lain di sini jika ada -->
+---
+
+## 📥 Cara Menginstal APK (via Itch.io)
+
+Jika Anda tidak ingin membangun proyek secara manual, Anda dapat langsung mencoba aplikasi dengan mengunduh APK melalui halaman Itch.io berikut:
+
+🔗 **[Download APK InfoCinema via Itch.io](https://revifaturahman.itch.io/infocinema)**  
+
+### 📲 Langkah-langkah Instalasi:
+
+1. Buka link Itch.io di atas melalui browser HP atau PC.
+2. Klik tombol **Download** dan unduh file `InfoCinema.apk`.
+3. Jika mengunduh lewat PC, pindahkan file ke perangkat Android Anda.
+4. Di perangkat Android:
+   - Buka file `InfoCinema.apk`.
+   - Izinkan instalasi dari sumber tidak dikenal jika diminta.
+   - Ikuti proses instalasi hingga selesai.
+5. Jalankan aplikasi InfoCinema dan nikmati!
